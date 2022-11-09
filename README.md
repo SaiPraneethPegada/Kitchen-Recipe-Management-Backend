@@ -14,8 +14,6 @@
 | POST | /signin | login credential requirements -> email and password |
 | POST | /forgot_password | user submit their registered email ID -> Receives email -> on click on the link recieved in mail will redirect to reset password page  |
 | POST | /reset_password | requirements password and confirm password. Handles -> password and confirm password should match, New password and old password should be different |
-| GET | /profile | this request will get the user details stored in mongodb |
-| PUT | /updateProfile | user can update their username |
 
 > After succesful logged in:
 
@@ -29,5 +27,7 @@
 | PATCH | /users/favRecipe | user can add posted recipe to favorites |
 | GET | /users/favRecipes | fetches recipes of logged user who added recipes to favorites |
 | PATCH | /users/addComment/:id | adds comment to a particular posted recipe |
+| GET | /profile | fetches user details stored in mongodb |
+| PUT | /updateProfile | user can update their username |
 
 
