@@ -13,11 +13,9 @@ const recipeSchema = new Schema(
       required: [true, "Please enter Instructions for the recipe"],
     },
     image: { type: String },
-    is_veg: { type: Boolean, default: null },
     userId: { type: String },
     userName: { type: String },
     likes: { type: [String], default: [] },
-    dislikes: { type: [String], default: [] },
     comments: [
       {
         userId: { type: String },

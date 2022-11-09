@@ -22,7 +22,7 @@ const auth = {
               message: "Authentication failed in access token",
             });
           // success:
-          console.log(req.user);
+          // console.log(req.user);
           req.user = user;
           next();
         });
@@ -37,9 +37,9 @@ const auth = {
 
   session: (req, res, next) => {
     try {
-      console.log("headers-", req.headers);
+      // console.log("headers-", req.headers);
       const token = req.header("Authorization");
-      console.log(token);
+      // console.log(token);
       const tokenData = jwt.decode(token);
 
       if (!token) {
@@ -58,7 +58,7 @@ const auth = {
               message: "Authentication failed in session token",
             });
           // success:
-          console.log(req.user);
+          // console.log(req.user);
           req.user = user;
           next();
         });

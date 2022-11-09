@@ -14,6 +14,7 @@ router.get("/recipe/:id", recipeController.getById);
 router.put("/updateRecipe/:id", auth.session, recipeController.updateRecipe);
 router.delete("/removeRecipe/:id", auth.session, recipeController.deleteRecipe);
 router.patch("/favRecipe", auth.session, recipeController.favRecipe);
+router.get("/favRecipes", auth.session, recipeController.getFavRecipe);
 router.patch("/addComment/:id", auth.session, recipeController.addComment);
 
 module.exports = router;

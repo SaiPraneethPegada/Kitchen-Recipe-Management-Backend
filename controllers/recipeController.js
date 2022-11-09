@@ -150,33 +150,13 @@ const recipeController = {
       });
 
       const liked = recipe.likes.findIndex((id) => id === String(userId));
-      // const disliked = recipe.dislikes.findIndex((id) => id === String(userId));
-      // console.log(liked);
 
       if (recipe) {
-        // if (disliked !== -1) {
-        //   recipe.dislikes = recipe.dislikes.filter(
-        //     (id) => id !== String(userId)
-        //   );
-        // }
         if (liked === -1) {
           recipe.likes.push(userId);
         } else {
           recipe.likes = recipe.likes.filter((id) => id !== String(userId));
-          recipe.dislikes.push(userId);
         }
-        // else if (value === "dislike") {
-        //   if (liked !== -1) {
-        //     recipe.likes = recipe.likes.filter((id) => id !== String(userId));
-        //   }
-        //   if (disliked === -1) {
-        //     recipe.dislikes.push(userId);
-        //   } else {
-        //     recipe.dislikes = recipe.dislikes.filter(
-        //       (id) => id !== String(userId)
-        //     );
-        //   }
-        // }
         await RecipeDetails.findByIdAndUpdate(
           { _id: mongodb.ObjectId(req.body.id) },
           recipe
@@ -185,12 +165,10 @@ const recipeController = {
         let message = "";
 
         if (liked !== -1) {
-          message = "Disliked";
+          message = "Fav Removed";
         } else {
-          message = "Liked";
+          message = "Favorite";
         }
-        console.log(message);
-
         res.json({
           statusCode: 200,
           message,
@@ -201,22 +179,6 @@ const recipeController = {
           message: "Recipe Not Found",
         });
       }
-
-      // if (recipe) {
-      //   await RecipeDetails.findOneAndUpdate(
-      //     { _id: mongodb.ObjectId(req.body.id) },
-      //     { $push: { likes: userId } }
-      //   );
-      //   res.json({
-      //     statusCode: 200,
-      //     message: "Liked",
-      //   });
-      // } else {
-      //   res.json({
-      //     statusCode: 400,
-      //     message: "Already liked",
-      //   });
-      // }
     } catch (error) {
       res.json({
         statusCode: 500,
@@ -247,7 +209,7 @@ const recipeController = {
             },
           }
         );
-        console.log(push);
+        // console.log(push);
         res.send({
           statusCode: 200,
           message: "Comment added successfully!",
@@ -262,6 +224,30 @@ const recipeController = {
       res.send({
         statusCode: 500,
         error,
+      });
+    }
+  },
+
+  getFavRecipe: async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const fav = await RecipeDetails.find({ likes: userId });
+
+      if (fav.length > 0) {
+        res.send({
+          statusCode: 200,
+          fav,
+        });
+      } else {
+        res.send({
+          statusCode: 400,
+          message: "No Recipes Found",
+        });
+      }
+    } catch (error) {
+      res.send({
+        statusCode: 500,
+        error: error.message,
       });
     }
   },
